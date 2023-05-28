@@ -5,6 +5,7 @@ Credits:
 * `langchain-chat-websockets <https://github.com/pors/langchain-chat-websockets>`_
 """
 import logging
+import traceback
 from typing import Any, Awaitable, Callable
 
 from fastapi import WebSocket, WebSocketDisconnect
@@ -43,7 +44,8 @@ class BaseWebsocketConnection(BaseModel):
                         message_type=MessageType.START,
                     ).dict()
                 )
-                await self.chain_executor(user_message)
+                user_chain_message = {"input":user_message}
+                await self.chain_executor(user_chain_message)
                 await self.websocket.send_json(
                     WebsocketResponse(
                         sender=Sender.BOT,
@@ -56,6 +58,8 @@ class BaseWebsocketConnection(BaseModel):
                 break
             except Exception as e:
                 logger.error(e)
+                traceback.print_exc()
+                print("Error occured",repr(e))
                 await self.websocket.send_json(
                     WebsocketResponse(
                         sender=Sender.BOT,
