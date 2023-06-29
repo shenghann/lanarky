@@ -5,21 +5,41 @@
 <h1> Lanarky </h1>
 
 [![stars](https://img.shields.io/github/stars/ajndkr/lanarky)](https://github.com/ajndkr/lanarky/stargazers)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
-[![PyPI version](https://badge.fury.io/py/lanarky.svg)](https://pypi.org/project/lanarky/)
-[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-3916/)
-[![Code Coverage](https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main)](https://coveralls.io/github/ajndkr/lanarky?branch=main)
 [![Documentation](https://img.shields.io/badge/documentation-ReadTheDocs-blue.svg)](https://lanarky.readthedocs.io/en/latest/)
+[![Code Coverage](https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main)](https://coveralls.io/github/ajndkr/lanarky?branch=main)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
+[![Twitter](https://img.shields.io/twitter/follow/lanarky_io?style=social)](https://twitter.com/intent/follow?screen_name=lanarky_io)
+
+[![PyPI version](https://badge.fury.io/py/lanarky.svg)](https://pypi.org/project/lanarky/)
+[![PyPI stats](https://img.shields.io/pypi/dm/lanarky.svg)](https://pypistats.org/packages/lanarky)
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/lanarky.svg)](https://pypi.org/project/lanarky/)
 
 </div>
 
-Lanarky is an open-source framework to deploy LLM applications in production. It is built on top of [FastAPI](https://github.com/tiangolo/fastapi)
-and comes with batteries included.
+Lanarky is a [FastAPI](https://github.com/tiangolo/fastapi) framework to build production-grade LLM applications.
+
+</div>
+<details>
+<summary><strong>Table of Contents</strong></summary>
+
+- [🚀 Features](#-features)
+- [❓ Why?](#-why)
+- [💾 Installation](#-installation)
+- [🔥 Build your first LLM app](#-build-your-first-llm-app)
+- [📍 Roadmap](#-roadmap)
+- [🤩 Stargazers](#-stargazers)
+- [🤝 Contributing](#-contributing)
+- [📝 License](#-license)
+- [✨ Want to build LLM applications with us?](#-want-to-build-llm-applications-with-us)
+
+</details>
 
 ## 🚀 Features
 
-- supports [LangChain](https://github.com/hwchase17/langchain)
-- simple gradio chatbot UI for fast prototyping
+- 🌐 multi-mode token streaming
+- 💬 simple gradio chatbot UI for fast prototyping
+- 🔗 supports [LangChain](https://github.com/hwchase17/langchain) applications
+- 🗄️ multiple LLM caching strategies
 
 See [Roadmap](#-roadmap) for upcoming features.
 
@@ -40,29 +60,31 @@ pip install lanarky
 
 You can find the full documentation at [https://lanarky.readthedocs.io/en/latest/](https://lanarky.readthedocs.io/en/latest/).
 
-## 🔥 Deploy a simple Langchain application in under 20 lines of code
+## 🔥 Build your first Langchain app
 
 ```python
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from langchain import ConversationChain
 from langchain.chat_models import ChatOpenAI
-from pydantic import BaseModel
-from lanarky.responses import StreamingResponse
+
+from lanarky import LangchainRouter
 
 load_dotenv()
 app = FastAPI()
 
-class Request(BaseModel):
-    query: str
-
-@app.post("/chat")
-async def chat(request: Request) -> StreamingResponse:
-    chain = ConversationChain(llm=ChatOpenAI(temperature=0, streaming=True), verbose=True)
-    return StreamingResponse.from_chain(chain, request.query, media_type="text/event-stream")
+langchain_router = LangchainRouter(
+    langchain_url="/chat",
+    langchain_object=ConversationChain(
+        llm=ChatOpenAI(temperature=0), verbose=True
+    ),
+    streaming_mode=0
+  )
+app.include_router(langchain_router)
 ```
 
-See [`examples/`](https://github.com/ajndkr/lanarky/blob/main/examples/README.md) for list of available demo examples.
+See [`examples/`](https://github.com/ajndkr/lanarky/blob/main/examples/README.md)
+for list of available demo examples.
 
 Create a `.env` file using `.env.sample` and add your OpenAI API key to it
 before running the examples.
@@ -73,10 +95,11 @@ before running the examples.
 
 - [x] Add support for [LangChain](https://github.com/hwchase17/langchain)
 - [x] Add [Gradio](https://github.com/gradio-app/gradio) UI for fast prototyping
-- [ ] Add SQL database integration
-- [ ] Add support for [Guardrails](https://github.com/ShreyaR/guardrails)
+- [x] Add support for in-memory, Redis and [GPTCache](https://github.com/zilliztech/GPTCache) LLM caching
 - [ ] Add support for [LlamaIndex](https://github.com/jerryjliu/llama_index)
-- [ ] Add [GPTCache](https://github.com/zilliztech/GPTCache) integration
+- [ ] Add support for [Guidance](https://github.com/microsoft/guidance)
+- [ ] Add SQL database integration
+- [ ] Add support for [Rebuff](https://github.com/woop/rebuff)
 
 ## 🤩 Stargazers
 
@@ -105,3 +128,10 @@ See [CONTRIBUTING.md](https://github.com/ajndkr/lanarky/blob/main/CONTRIBUTING.m
 ## ⚖️ License
 
 The library is released under the [MIT License](https://github.com/ajndkr/lanarky/blob/main/LICENSE).
+
+## ✨ Want to build LLM applications with us?
+
+Are you interested in building LLM applications with us? We would love to hear from you! Reach out to us on
+Twitter [@lanarky_io](https://twitter.com/lanarky_io).
+
+Let's connect and explore the possibilities of working together to create amazing LLM applications with Lanarky!

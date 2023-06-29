@@ -9,19 +9,18 @@ Welcome to Lanarky
 .. toctree::
    :maxdepth: 1
    :name: basic
-   :caption: Basic
    :hidden:
 
-   basic/features
-   basic/getting_started
+   features
+   getting_started
 
 .. toctree::
    :maxdepth: 1
-   :name: advanced
-   :caption: Advanced
+   :name: frameworks
+   :caption: Supported Frameworks
    :hidden:
 
-   advanced/custom_callbacks
+   langchain/index
 
 .. toctree::
    :maxdepth: 2
@@ -40,11 +39,17 @@ Welcome to Lanarky
 .. image:: https://badge.fury.io/py/lanarky.svg
    :target: https://pypi.org/project/lanarky/
 
-.. image:: https://img.shields.io/badge/python-3.9-blue.svg
-   :target: https://www.python.org/downloads/release/python-3916/
+.. image:: https://img.shields.io/pypi/pyversions/lanarky.svg
+   :target: https://pypi.org/project/lanarky/
 
 .. image:: https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main
    :target: https://coveralls.io/github/ajndkr/lanarky?branch=main
+
+.. image:: https://img.shields.io/pypi/dm/lanarky.svg
+   :target: https://pypistats.org/packages/lanarky
+
+.. image:: https://img.shields.io/twitter/follow/lanarky_io?style=social
+   :target: https://twitter.com/intent/follow?screen_name=lanarky_io
 
 Lanarky is an open-source framework to deploy LLM applications in production.
 It is built on top of `FastAPI <https://github.com/tiangolo/fastapi>`_ and comes with batteries included.
@@ -84,3 +89,11 @@ See `CONTRIBUTING.md <https://github.com/ajndkr/lanarky/blob/main/CONTRIBUTING.m
 ----------
 
 The library is released under the `MIT License <https://github.com/ajndkr/lanarky/blob/main/LICENSE>`_.
+
+✨ Want to build LLM applications with us?
+------------------------------------------
+
+Are you interested in building LLM applications with us? We would love to hear from you! Reach out to us on
+Twitter `@lanarky_io <https://twitter.com/lanarky_io>`_.
+
+Let's connect and explore the possibilities of working together to create amazing LLM applications with Lanarky!
